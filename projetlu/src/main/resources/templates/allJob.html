@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>table of job</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<form th:action="@{/logout}" method="get">
+		<button type="Submit">logout</button>
+	</form>
+	<form th:action="@{/adminhome}" method="get">
+		<button type="Submit">back</button>
+	</form>
+	<table>
+		<thead>
+			<tr>
+			<th>Job ID</th>
+			<th>Job Title</th>
+			<th>Min Salary</th>
+			<th>Max Salary</th>
+			<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="job:${jobs}">
+				<form th:name="${job.jobId}" action='/updateJob' 
+				method='get'>
+					<td><h6 th:text="${job.jobId}" ></h6></td>
+					<input name="jobId" type="hidden" th:value="${job.jobId}"/>
+					<td><input name="jobTitle" type="text" th:value="${job.jobTitle}"/></td>
+					<td><input name="minSalary" type="text" th:value="${job.minSalary}"/></td>
+					<td><input name="maxSalary" type="text" th:value="${job.maxSalary}"/></td>
+					<td><button><a th:attr="href=@{javascript:document.}+${job.jobId}+@{.submit();}">update</a></button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form name="addJob" action='/addJob' method='get'>
+					<td><input name="jobId" type="text" /></td>
+					<td><input name="jobTitle" type="text" /></td>
+					<td><input name="minSalary" type="text" /></td>
+					<td><input name="maxSalary" type="text" /></td>
+					<td><button><a href="javascript:docoment.addJob.submit();">add</a></button></td>
+				</form>
+			</tr>
+					
+		</tbody>
+	</table>
+</body>
+</html>

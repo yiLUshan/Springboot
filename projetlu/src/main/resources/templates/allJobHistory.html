@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>table of Job History</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>	
+	<form th:action="@{/logout}" method="get">
+		<button type="Submit">logout</button>
+	</form>
+	<form th:action="@{/adminhome}" method="get">
+		<button type="Submit">back</button>
+	</form>
+	<table>
+		<thead>
+			<tr>
+			<th>Employee ID</th>
+			<th>Start Date</th>
+			<th>End Date</th>
+			<th>Job Id</th>
+			<th>Department Id</th>
+			<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="jobHistory:${jobHistorys}">
+				<form th:name="${jobHistory.id.employeeId}+${jobHistory.id.startDate}" action='/updateJobHistory' 
+				method='get'>
+					<td><h6 th:text="${jobHistory.employeeBean.firstName}+' '+${jobHistory.employeeBean.lastName}" ></h6></td>
+					<input name="employeeId" type="hidden" th:value="${jobHistory.id.employeeId}"/>
+					<td><h6 th:text="${jobHistory.id.startDate}" ></h6></td>
+					<input name="startDate" type="hidden" th:value="${jobHistory.id.startDate}"/>
+					<td><input name="endDate" type="date" th:value="${jobHistory.endDate}"/></td>
+					<td>
+						<select name="jobId" id="jobId">
+							<option th:value="${jobHistory.jobBean.jobId}" th:text="${jobHistory.jobBean.jobTitle}"></option>
+							<option th:each="job:${allJob}" th:value="${job.jobId}" th:text="${job.jobTitle}"></option>
+						</select>
+					</td>
+					<td>
+						<select name="departmentId" id="departmentId">
+							<option th:value="${jobHistory.department.departmentId}" th:text="${jobHistory.department.departmentName}"></option>
+							<option th:each="department:${allDepartment}" th:value="${department.departmentId}" th:text="${department.departmentName}"></option>
+						</select>
+					</td>
+					<td><button><a th:attr="href=@{javascript:document.}+${jobHistory.id.employeeId}+${jobHistory.id.startDate}+@{.submit();}">update</a></button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form name="addJobHistory" action='/addJobHistory' method='get'>
+					<td>
+						<select name="employeeId" id="jobId">
+							<option th:each="employee:${allEmployee}" th:value="${employee.employeeId}" th:text="${employee.firstName}+' '+${employee.lastName}"></option>
+						</select>
+					</td>
+					<td><input name="startDate" type="date"/></td>
+					<td><input name="endDate" type="date" /></td>
+					<td>
+						<select name="jobId" id="jobId">
+							<option th:each="job:${allJob}" th:value="${job.jobId}" th:text="${job.jobTitle}"></option>
+						</select>
+					</td>
+					<td>
+						<select name="departmentId" id="departmentId">
+							<option th:each="department:${allDepartment}" th:value="${department.departmentId}" th:text="${department.departmentName}"></option>
+						</select>
+					</td>
+					<td><button><a href="javascript:docoment.addJobHistory.submit();">add</a></button></td>
+				</form>
+			</tr>
+					
+		</tbody>
+	</table>
+</body>
+</html>
+				
+				

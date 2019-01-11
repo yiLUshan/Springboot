@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.5" xmlns="http://www.eclipse.org/eclipselink/xsds/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eclipse.org/eclipselink/xsds/persistence/orm http://www.eclipse.org/eclipselink/xsds/eclipselink_orm_2_5.xsd">
+    <named-query name="Country.findAll">
+        <query>select c from Country c</query>
+    </named-query>
+    <named-query name="Department.findAll">
+        <query>select d from Department d</query>
+    </named-query>
+    <named-query name="Employee.findAll">
+        <query>select e from Employee e</query>
+    </named-query>
+    <named-query name="JobHistory.findAll">
+        <query>select j from JobHistory j</query>
+    </named-query>
+    <named-query name="Job.findAll">
+        <query>select j from Job j</query>
+    </named-query>
+    <named-query name="Location.findAll">
+        <query>select l from Location l</query>
+    </named-query>
+    <named-query name="Region.findAll">
+        <query>select r from Region r</query>
+    </named-query>
+	<entity class="fise3.info6.projetlu.model.Country" access="VIRTUAL">
+		<table name="countries"/>
+		<attributes>
+			<id name="countryId" attribute-type="String">
+				<column name="COUNTRY_ID"/>
+				<generated-value strategy="IDENTITY"/>
+			</id>
+			<basic name="countryName" attribute-type="String">
+				<column name="COUNTRY_NAME"/>
+			</basic>
+			<basic name="regionId" attribute-type="java.math.BigDecimal">
+				<column name="REGION_ID"/>
+			</basic>
+			<many-to-one name="region" target-entity="fise3.info6.projetlu.model.Region">
+				<join-column name="COUNTRY_ID"/>
+			</many-to-one>
+			<one-to-many name="locations" mapped-by="country" target-entity="fise3.info6.projetlu.model.Location" attribute-type="java.util.List">
+			</one-to-many>
+		</attributes>
+	</entity>
+	<entity class="fise3.info6.projetlu.model.Department" access="VIRTUAL">
+		<table name="departments"/>
+		<attributes>
+			<id name="departmentId" attribute-type="long">
+				<column name="DEPARTMENT_ID"/>
+				<generated-value strategy="IDENTITY"/>
+			</id>
+			<basic name="departmentName" attribute-type="String">
+				<column name="DEPARTMENT_NAME"/>
+			</basic>
+			<basic name="locationId" attribute-type="java.math.BigDecimal">
+				<column name="LOCATION_ID"/>
+			</basic>
+			<basic name="managerId" attribute-type="java.math.BigDecimal">
+				<column name="MANAGER_ID"/>
+			</basic>
+			<many-to-one name="location" target-entity="fise3.info6.projetlu.model.Location">
+				<join-column name="DEPARTMENT_ID" referenced-column-name="CITY"/>
+			</many-to-one>
+			<one-to-many name="employees" mapped-by="department" target-entity="fise3.info6.projetlu.model.Employee" attribute-type="java.util.List">
+			</one-to-many>
+			<one-to-many name="jobHistories" mapped-by="department" target-entity="fise3.info6.projetlu.model.JobHistory" attribute-type="java.util.List">
+			</one-to-many>
+		</attributes>
+	</entity>
+	<entity class="fise3.info6.projetlu.model.Employee" access="VIRTUAL">
+		<table name="employees"/>
+		<attributes>
+			<id name="employeeId" attribute-type="long">
+				<column name="EMPLOYEE_ID"/>
+				<generated-value strategy="IDENTITY"/>
+			</id>
+			<basic name="departmentId" attribute-type="java.math.BigDecimal">
+				<column name="DEPARTMENT_ID"/>
+			</basic>
+			<basic name="email" attribute-type="String">
+				<column name="EMAIL"/>
+			</basic>
+			<basic name="firstName" attribute-type="String">
+				<column name="FIRST_NAME"/>
+			</basic>
+			<basic name="hireDate" attribute-type="java.util.Date">
+				<column name="HIRE_DATE"/>
+				<temporal>DATE</temporal>
+			</basic>
+			<basic name="jobId" attribute-type="String">
+				<column name="JOB_ID"/>
+			</basic>
+			<basic name="lastName" attribute-type="String">
+				<column name="LAST_NAME"/>
+			</basic>
+			<basic name="managerId" attribute-type="java.math.BigDecimal">
+				<column name="MANAGER_ID"/>
+			</basic>
+			<basic name="phoneNumber" attribute-type="String">
+				<column name="PHONE_NUMBER"/>
+			</basic>
+			<basic name="salary" attribute-type="java.math.BigDecimal">
+				<column name="SALARY"/>
+			</basic>
+			<many-to-one name="department" target-entity="fise3.info6.projetlu.model.Department">
+				<join-column name="COMMISSION_PCT"/>
+			</many-to-one>
+			<many-to-one name="job" target-entity="fise3.info6.projetlu.model.Job">
+				<join-column name="COMMISSION_PCT"/>
+			</many-to-one>
+			<one-to-many name="jobHistories" mapped-by="employee" target-entity="fise3.info6.projetlu.model.JobHistory" attribute-type="java.util.List">
+			</one-to-many>
+		</attributes>
+	</entity>
+	<entity class="fise3.info6.projetlu.model.JobHistory" access="VIRTUAL">
+		<table name="job_history"/>
+		<attributes>
+			<embedded-id name="id" attribute-type="model.JobHistoryPK"></embedded-id>
+			<basic name="endDate" attribute-type="java.util.Date">
+				<column name="END_DATE"/>
+				<temporal>DATE</temporal>
+			</basic>
+			<basic name="jobId" attribute-type="String">
+				<column name="JOB_ID"/>
+			</basic>
+			<many-to-one name="department" target-entity="fise3.info6.projetlu.model.Department">
+				<join-column name="DEPARTMENT_ID"/>
+			</many-to-one>
+			<many-to-one name="employee" target-entity="fise3.info6.projetlu.model.Employee">
+				<join-column name="DEPARTMENT_ID" referenced-column-name="COMMISSION_PCT"/>
+			</many-to-one>
+			<many-to-one name="job" target-entity="fise3.info6.projetlu.model.Job">
+				<join-column name="DEPARTMENT_ID"/>
+			</many-to-one>
+		</attributes>
+	</entity>
+	<entity class="fise3.info6.projetlu.model.Job" access="VIRTUAL">
+		<table name="jobs"/>
+		<attributes>
+			<id name="jobId" attribute-type="String">
+				<column name="JOB_ID"/>
+				<generated-value strategy="IDENTITY"/>
+			</id>
+			<basic name="jobTitle" attribute-type="String">
+				<column name="JOB_TITLE"/>
+			</basic>
+			<basic name="maxSalary" attribute-type="java.math.BigDecimal">
+				<column name="MAX_SALARY"/>
+			</basic>
+			<basic name="minSalary" attribute-type="java.math.BigDecimal">
+				<column name="MIN_SALARY"/>
+			</basic>
+			<one-to-many name="employees" mapped-by="job" target-entity="fise3.info6.projetlu.model.Employee" attribute-type="java.util.List">
+			</one-to-many>
+			<one-to-many name="jobHistories" mapped-by="job" target-entity="fise3.info6.projetlu.model.JobHistory" attribute-type="java.util.List">
+			</one-to-many>
+		</attributes>
+	</entity>
+	<entity class="fise3.info6.projetlu.model.Location" access="VIRTUAL">
+		<table name="locations"/>
+		<attributes>
+			<id name="locationId" attribute-type="long">
+				<column name="LOCATION_ID"/>
+				<generated-value strategy="IDENTITY"/>
+			</id>
+			<basic name="countryId" attribute-type="String">
+				<column name="COUNTRY_ID"/>
+			</basic>
+			<basic name="postalCode" attribute-type="String">
+				<column name="POSTAL_CODE"/>
+			</basic>
+			<basic name="stateProvince" attribute-type="String">
+				<column name="STATE_PROVINCE"/>
+			</basic>
+			<basic name="streetAddress" attribute-type="String">
+				<column name="STREET_ADDRESS"/>
+			</basic>
+			<many-to-one name="country" target-entity="fise3.info6.projetlu.model.Country">
+				<join-column name="CITY"/>
+			</many-to-one>
+			<one-to-many name="departments" mapped-by="location" target-entity="fise3.info6.projetlu.model.Department" attribute-type="java.util.List">
+			</one-to-many>
+		</attributes>
+	</entity>
+	<entity class="fise3.info6.projetlu.model.Region" access="VIRTUAL">
+		<table name="regions"/>
+		<attributes>
+			<id name="regionId" attribute-type="long">
+				<column name="REGION_ID"/>
+				<generated-value strategy="IDENTITY"/>
+			</id>
+			<basic name="regionName" attribute-type="String">
+				<column name="REGION_NAME"/>
+			</basic>
+			<one-to-many name="countries" mapped-by="region" target-entity="fise3.info6.projetlu.model.Country" attribute-type="java.util.List">
+			</one-to-many>
+		</attributes>
+	</entity>
+	<embeddable class="fise3.info6.projetlu.model.JobHistoryPK" access="VIRTUAL">
+		<attributes>
+			<basic name="employeeId" attribute-type="long">
+				<column name="EMPLOYEE_ID"/>
+			</basic>
+			<basic name="startDate" attribute-type="java.util.Date">
+				<column name="START_DATE"/>
+				<temporal>DATE</temporal>
+			</basic>
+		</attributes>
+	</embeddable>
+</entity-mappings>

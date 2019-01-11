@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>table of Employee</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<form th:action="@{/logout}" method="get">
+		<button type="Submit">logout</button>
+	</form>
+	<form th:action="@{/adminhome}" method="get">
+		<button type="Submit">back</button>
+	</form>
+	<table>
+		<thead>
+			<tr>
+			<th>Employee ID</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Email</th>
+			<th>Phone Number</th>
+			<th>Hire Date</th>
+			<th>Department Id</th>
+			<th>Job Id</th>
+			<th>Salary</th>
+			<th>Commission Pct</th>
+			<th>Manager Id</th>
+			<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="employee:${employees}">
+				<form th:name="${employee.firstName}+${employee.LastName}" action='/updateEmployee' method='get'>
+					<td><h6 th:text="${employee.employeeId}" ></h6></td>
+					<input name="employeeId" type="hidden" th:value="${employee.employeeId}"/>
+					<td><input name="firstName" type="text" th:value="${employee.firstName}"/></td>
+					<td><input name="lastName" type="text" th:value="${employee.lastName}"/></td>
+					<td><input name="email" type="text" th:value="${employee.email}"/></td>
+					<td><input name="phoneNumber" type="text" th:value="${employee.phoneNumber}"/></td>
+					<td><input name="hireDate" type="date" th:value="${employee.hireDate}"/></td>
+					<td>
+						<select name="departmentId" id="departmentId">
+							<option th:value="${employee.department.departmentId}" th:text="${employee.department.departmentName}"></option>
+							<option th:each="department:${allDepartment}" th:value="${department.departmentId}" th:text="${department.departmentName}"></option>
+						</select>
+					</td>
+					<td>
+						<select name="jobId" id="jobId">
+							<option th:value="${employee.jobBean.jobId}" th:text="${employee.jobBean.jobTitle}"></option>
+							<option th:each="job:${allJob}" th:value="${job.jobId}" th:text="${job.jobTitle}"></option>
+						</select>
+					</td>
+					<td><input name="salary" type="number" th:value="${employee.salary}"/></td>
+					<td><input name="commissionPct" type="number" th:value="${employee.commissionPct}"/></td>
+					<td><input name="managerId" type="number" th:value="${employee.managerId}"/></td>
+
+					<td><button><a th:attr="href=@{javascript:document.}+${employee.firstName}+${employee.LastName}+@{.submit();}">update</a></button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form name="addEmployee" action='/addEmployee' method='get'>
+					<td><input name="employeeId" type="number" /></td>
+					<td><input name="firstName" type="text" /></td>
+					<td><input name="lastName" type="text" /></td>
+					<td><input name="email" type="text" /></td>
+					<td><input name="phoneNumber" type="text" /></td>
+					<td><input name="hireDate" type="date" /></td>
+					<td>
+						<select name="jobId" id="jobId">
+							<option th:each="job:${allJob}" th:value="${job.jobId}" th:text="${job.jobTitle}"></option>
+						</select>
+					</td>
+					<td><input name="salary" type="number" /></td>
+					<td><input name="commissionPct" type="number" /></td>
+					<td><input name="managerId" type="number" /></td>
+					<td>
+						<select name="departmentId" id="departmentId">
+							<option th:each="department:${allDepartment}" th:value="${department.departmentId}" th:text="${department.departmentName}"></option>
+						</select>
+					</td>
+					<td><button><a href="javascript:docoment.addEmployee.submit();">add</a></button></td>
+				</form>
+			</tr>
+					
+		</tbody>
+	</table>
+</body>
+</html>

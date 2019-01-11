@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>table of Location</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>	
+	<form th:action="@{/logout}" method="get">
+		<button type="Submit">logout</button>
+	</form>
+	<form th:action="@{/adminhome}" method="get">
+		<button type="Submit">back</button>
+	</form>
+	<table>
+		<thead>
+			<tr>
+			<th>Location ID</th>
+			<th>Street Adress</th>
+			<th>Postal Code</th>
+			<th>City</th>
+			<th>State Province</th>
+			<th>Country Id</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="location:${locations}">
+				<form th:name="${location.locationId}" action='/updateLocation' 
+				method='get'>
+					<td><h6 th:text="${location.locationId}" ></h6></td>
+					<input name="locationId" type="hidden" th:value="${location.locationId}"/>
+					<td><input name="streetAddress" type="text" th:value="${location.streetAddress}"/></td>
+					<td><input name="postalCode" type="text" th:value="${location.postalCode}"/></td>
+					<td><input name="city" type="text" th:value="${location.city}"/></td>
+					<td><input name="stateProvince" type="text" th:value="${location.stateProvince}"/></td>
+					<td>
+						<select name="countryId" id="countryId">
+							<option th:value="${location.country.countryId}" th:text="${location.country.countryName}"></option>
+							<option th:each="country:${allCountry}" th:value="${country.countryId}" th:text="${country.countryName}"></option>
+						</select>
+					</td>
+					<td><button><a th:attr="href=@{javascript:document.}+${location.locationId}+@{.submit();}">update</a></button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form name="addLocation" action='/addLocation' method='get'>
+					<td><input name="locationId" type="number" /></td>
+					<td><input name="streetAddress" type="text" /></td>
+					<td><input name="postalCode" type="text" /></td>
+					<td><input name="city" type="text" /></td>
+					<td><input name="stateProvince" type="text" /></td>
+					<td>
+						<select name="countryId" id="countryId">
+							<option th:each="country:${allCountry}" th:value="${country.countryId}" th:text="${country.countryName}"></option>
+						</select>
+					</td>
+					<td><button><a href="javascript:docoment.addLocation.submit();">add</a></button></td>
+				</form>
+			</tr>
+			</tbody>
+	</table>
+</body>
+</html>

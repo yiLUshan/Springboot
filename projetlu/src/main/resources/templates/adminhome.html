@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome to the website</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h3>Welcome!</h3>
+	
+	<a th:href="@{http://localhost:8080/allCountry}">show countries</a>	
+	<a th:href="@{http://localhost:8080/allDepartment}">show departments</a>
+	<a th:href="@{http://localhost:8080/allEmployee}">show employees</a>
+	<a th:href="@{http://localhost:8080/allJob}">show jobs</a>
+	<a th:href="@{http://localhost:8080/allJobHistory}">show job histories</a>
+	<a th:href="@{http://localhost:8080/allLocation}">show locations</a>
+	<a th:href="@{http://localhost:8080/allRegion}">show regions</a>
+	<a th:href="@{http://localhost:8080/salary}">show salaries</a>
+	<a th:href="@{http://localhost:8080/salaryDistributed}">show salary distribution</a>
+	<br></br>
+	<br></br>
+	<form th:action="@{/logout}" method="get">
+		<button type="Submit">logout</button>
+	</form>	
+</body>
+</html>

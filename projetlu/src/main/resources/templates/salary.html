@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>table of salary</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+</head>
+<body>
+	<form th:action="@{/logout}" method="get">
+		<button type="Submit">logout</button>
+	</form>
+	<form th:action="@{/adminhome}" method="get">
+		<button type="Submit">back</button>
+	</form>
+	<div id="table_div"></div>
+<script type="text/javascript" th:inline="javascript">
+	google.charts.load('current', {'packages':['table']});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+    var d = [[${allSalary}]];
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'FirstName');
+    data.addColumn('string', 'LastName');
+    data.addColumn('number', 'Salary');
+    data.addRows(d);
+
+	var chart = new google.visualization.Table(document.getElementById('table_div'));
+	chart.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
+}
+</script>
+</body>
+</html>

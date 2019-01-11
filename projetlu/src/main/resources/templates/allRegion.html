@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>table of region</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<form th:action="@{/logout}" method="get">
+		<button type="Submit">logout</button>
+	</form>
+	<form th:action="@{/adminhome}" method="get">
+		<button type="Submit">back</button>
+	</form>
+	<table>
+		<thead>
+			<tr>
+			<th>Region ID</th>
+			<th>Region Name</th>
+			<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="region:${regions}">
+				<form th:name="${region.regionId}" action='/updateRegion' 
+				method='get'>
+					<td><h6 th:text="${region.regionId}" ></h6></td>
+					<input name="regionId" type="hidden" th:value="${region.regionId}"/>
+					<td><input name="regionName" type="text" th:value="${region.regionName}"/></td>
+					<td><button><a th:attr="href=@{javascript:document.}+${region.regionName}+@{.submit();}">update</a></button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form name="addRegion" action='/addRegion' method='get'>
+					<td><input name="regionId" type="number" /></td>
+					<td><input name="regionName" type="text" /></td>
+					<td><button><a href="javascript:docoment.addRegion.submit();">add</a></button></td>
+				</form>
+			</tr>	
+		</tbody>
+	</table>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>table of salary</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+</head>
+<body>	
+	<form th:action="@{/logout}" method="get">
+		<button type="Submit">logout</button>
+	</form>
+	<form th:action="@{/adminhome}" method="get">
+		<button type="Submit">back</button>
+	</form>
+	<table class="columns">
+      <tr>
+        <td><div id="piechart" style="border: 1px solid #ccc"></div></td>
+        <td><div id="barchart" style="border: 1px solid #ccc"></div></td>
+      </tr>
+    </table>
+<script type="text/javascript" th:inline="javascript">
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+    var d = [[${salaryDistribued}]];
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'salary');
+    data.addColumn('number', 'number of employee');
+    data.addRows(d);
+
+
+	var piechart_options = {title:'Pie Chart: the distribution pie chart of salary',
+            width:800,
+            height:400};
+	var piechart = new google.visualization.PieChart(document.getElementById('piechart'));
+	piechart.draw(data, piechart_options);
+
+	var barchart_options = {title:'Bar Chart: the distribution barchart of salary',
+            width:800,
+            height:700,
+            legend: 'none'};
+	var barchart = new google.visualization.BarChart(document.getElementById('barchart'));
+	barchart.draw(data, barchart_options);
+}
+</script>
+</body>
+</html>

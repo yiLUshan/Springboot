@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="projetlu">
+		<mapping-file>META-INF/eclipselink-orm.xml</mapping-file>
+		<class>fise3.info6.projetlu.model.Country</class>
+		<class>fise3.info6.projetlu.model.Department</class>
+		<class>fise3.info6.projetlu.model.Employee</class>
+		<class>fise3.info6.projetlu.model.JobHistory</class>
+		<class>fise3.info6.projetlu.model.JobHistoryPK</class>
+		<class>fise3.info6.projetlu.model.Job</class>
+		<class>fise3.info6.projetlu.model.Location</class>
+		<class>fise3.info6.projetlu.model.Region</class>
+		<class>fise3.info6.projetlu.model.User</class>
+	</persistence-unit>
+</persistence>

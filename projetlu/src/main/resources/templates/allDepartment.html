@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>table of department</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<form th:action="@{/logout}" method="get">
+		<button type="Submit">logout</button>
+	</form>
+	<form th:action="@{/adminhome}" method="get">
+		<button type="Submit">back</button>
+	</form>
+	<table>
+		<thead>
+			<tr>
+			<th>Department ID</th>
+			<th>Department Name</th>
+			<th>Manager ID</th>
+			<th>Location ID</th>
+			<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="department:${departments}">
+				<form th:name="${department.departmentId}+${department.departmentName}" action='/updateDepartment' method='get'>
+					<td><h6 th:text="${department.departmentId}" ></h6></td>
+					<input name="departmentId" type="hidden" th:value="${department.departmentId}"/>
+					<td><input name="departmentName" type="text" th:value="${department.departmentName}"/></td>
+					<td><input name="managerId" type="number" th:value="${department.managerId}"/></td>
+					<td>
+						<select name="locationId" id="locationId">
+							<option th:value="${department.location.locationId}" th:text="${department.location.locationId}"></option>
+							<option th:each="location:${allLocation}" th:value="${location.locationId}" th:text="${location.locationId}"></option>
+						</select>
+					</td>
+					<td><button><a th:attr="href=@{javascript:document.}+${department.departmentId}+${department.departmentName}+@{.submit();}">update</a></button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form name="addDepartment" action='/addDepartment' method='get'>
+					<td><input name="departmentId" type="number" /></td>
+					<td><input name="departmentName" type="text" /></td>
+					<td><input name="managerId" type="number" /></td>
+					<td>
+						<select name="locationId" id="locationId">
+							<option th:each="location:${allLocation}" th:value="${location.locationId}" th:text="${location.locationId}"></option>
+						</select>
+					</td>
+					<td><button><a href="javascript:docoment.addDepartment.submit();">add</a></button></td>
+				</form>
+			</tr>
+					
+		</tbody>
+	</table>
+</body>
+</html>

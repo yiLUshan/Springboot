@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>table of country</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<form th:action="@{/logout}" method="get">
+		<button type="Submit">logout</button>
+	</form>
+	<form th:action="@{/adminhome}" method="get">
+		<button type="Submit">back</button>
+	</form>
+	<table>
+		<thead>
+			<tr>
+			<th>Country ID</th>
+			<th>Country Name</th>
+			<th>Region Name</th>
+			<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="country:${countries}">
+				<form th:name="${country.countryId}+${country.countryName}" action='/updateCountry' 
+				method='get'>
+					<td><h6 th:text="${country.countryId}" ></h6></td>
+					<input name="countryId" type="hidden" th:value="${country.countryId}"/>
+					<td><input name="countryName" type="text" th:value="${country.countryName}"/></td>
+					<td>
+						<select name="regionId" id="regionId">
+							<option th:value="${country.region.regionId}" th:text="${country.region.regionName}"></option>
+							<option th:each="region:${allRegion}" th:value="${region.regionId}" th:text="${region.regionName}"></option>
+						</select>
+					</td>
+					<td><button><a th:attr="href=@{javascript:document.}+${country.countryId}+${country.countryName}+@{.submit();}">update</a></button>
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<form name="addCountry" action='/addCountry' method='get'>
+					<td><input name="countryId" type="text" /></td>
+					<td><input name="countryName" type="text" /></td>
+					<td>
+						<select name="regionId" id="regionId">
+							<option th:each="region:${allRegion}" th:value="${region.regionId}" th:text="${region.regionName}"></option>
+						</select>
+					</td>
+					<td><button><a href="javascript:docoment.addCountry.submit();">add</a></button></td>
+				</form>
+			</tr>					
+		</tbody>
+	</table>
+</body>
+</html>
